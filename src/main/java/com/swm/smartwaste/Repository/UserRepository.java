@@ -1,9 +1,15 @@
 package com.swm.smartwaste.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository; 
 
 import com.swm.smartwaste.Entity.User;
 
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Integer>{
+	
+	boolean existsByEmail(String email);
+	
+	Optional<User> findByEmail(String email);
 
 }
