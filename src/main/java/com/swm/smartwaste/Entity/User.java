@@ -1,5 +1,7 @@
 package com.swm.smartwaste.Entity;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.swm.smartwaste.Enum.UserRole;
 
@@ -11,8 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import java.util.List;
 
-	
+import jakarta.persistence.OneToMany;
+
+
 @Entity
 @Table(name = "Users")
 public class User {
@@ -33,6 +38,12 @@ public class User {
 	
 	private LocalDateTime createdAt;
 	
+	@OneToMany(mappedBy = "citizen")
+	@JsonIgnore
+	private List<Complaint> complaints;
+	
+	
+	
 	@PrePersist
 	protected void onCreate() {
 		createdAt=LocalDateTime.now();
@@ -46,6 +57,14 @@ public class User {
 		this.Id=id;
 	}
 	
+	public List<Complaint> getComplaints() {
+		return complaints;
+	}
+
+	public void setComplaints(List<Complaint> complaints) {
+		this.complaints = complaints;
+	}
+
 	public String getName() {
 		return name;
 	}
